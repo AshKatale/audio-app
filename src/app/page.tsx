@@ -1,11 +1,9 @@
 "use client"
 
 import Hero from "@/app/components/Hero";
-import Image from "next/image";
 import MicroPhone from "@/app/components/MicroPhone";
 import { useState } from "react";
 import Transcription from "@/app/components/Transcription";
-import { GridBackgroundDemo } from "@/app/components/GridBackground";
 
 export default function Home() {
 
@@ -13,6 +11,8 @@ export default function Home() {
   const [audioURL, setAudioURL] = useState("");
 
   const handleNewRecording = () => {
+    console.log(audioURL.length);
+    
     setAudioBlob(null);
   };
 

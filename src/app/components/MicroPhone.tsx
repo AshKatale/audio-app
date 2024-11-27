@@ -11,7 +11,6 @@ interface MicroPhoneProps {
 
 export default function MicroPhone({
   onStopRecording,
-  onTranscribe,
   onNewRecording,
 }: MicroPhoneProps) {
   const [isRecording, setIsRecording] = useState(false);
@@ -50,7 +49,8 @@ export default function MicroPhone({
   const startRecording = async () => {
     const userStream = await navigator.mediaDevices.getUserMedia({ audio: true });
     setStream(userStream);
-
+    console.log(audioBlob);
+    
     const mediaRecorder = new MediaRecorder(userStream);
     mediaRecorderRef.current = mediaRecorder;
     chunks.current = [];

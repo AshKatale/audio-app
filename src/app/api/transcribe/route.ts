@@ -22,8 +22,11 @@ if(error){
   return NextResponse.json({error : error , status : 500})
 }
     return NextResponse.json(result, {status: 200});
-  } catch (error: any) {
+  } catch (error: unknown) {
+    if(error instanceof Error)
     console.error("Error with Deepgram API:", error.message);
+  else
+    console.error("Error with Deepgram API:", error);
     return NextResponse.json({ error: "Failed to transcribe audio" }, { status: 500 });
   }
 }

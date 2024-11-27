@@ -15,7 +15,7 @@ export async function POST(req: NextRequest){
             audioUrl: audioUrl
         })
 
-        const res = audio.save();
+        audio.save();
         
         return NextResponse.json({status : 201 , message : "Audio saved successfully"})
 

@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "./Button";
 import { TextGenerateEffect } from "./TextGenerationEffect";
 import Loader from "./Loader";
-import { ScrollArea } from "./Scrollable";
 import axios from "axios";
 import dotenv from "dotenv";
 
@@ -48,7 +47,7 @@ const Transcription = ({ audioBlob }: TranscriptProps) => {
       }
     }
 
-    const apiKey = process.env.DEEPGRAM_API_KEY;
+    // const apiKey = process.env.DEEPGRAM_API_KEY;
     try {
       const response = await fetch("/api/transcribe", {
         method: "POST",
@@ -79,7 +78,7 @@ const Transcription = ({ audioBlob }: TranscriptProps) => {
           date  : Date.now()
         }
   
-        const response = await axios.post("/api/save", audioPost);
+        await axios.post("/api/save", audioPost);
         // console.log(response);
 
       } catch (error) {
