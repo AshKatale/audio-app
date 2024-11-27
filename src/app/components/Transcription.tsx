@@ -4,6 +4,7 @@ import { TextGenerateEffect } from "./TextGenerationEffect";
 import Loader from "./Loader";
 import axios from "axios";
 import dotenv from "dotenv";
+import { Toaster, toast } from 'react-hot-toast';
 
 dotenv.config();
 
@@ -36,14 +37,15 @@ const Transcription = ({ audioBlob }: TranscriptProps) => {
           // console.log("Uploaded Audio URL:", data.url);
           setAudioUrl(data.url);
           audioURL = data.url;
+          toast.success("Audio Transcribed successfully!");
         } else {
           const errorData = await response.json();
           console.error("Failed to upload audio:", errorData.error);
-          alert("Failed to upload audio.");
+          toast.error("Failed to upload audio.");
         }
       } catch (error) {
         console.error("Error during upload:", error);
-        alert("An error occurred while uploading.");
+        toast.error("An error occurred while uploading.");
       }
     }
 
@@ -70,28 +72,21 @@ const Transcription = ({ audioBlob }: TranscriptProps) => {
     }
   };
 
-  const saveAudioPost = async ()=>{
-      try {
-        const audioPost = {
-          text : transcription,
-          audioUrl : audioUrl,
-          date  : Date.now()
-        }
-  
-        await axios.post("/api/save", audioPost);
-        // console.log(response);
+  const saveAudioPost = async () => {
+    const audioPost = {
+      text: transcription,
+      audioUrl: audioUrl,
+      date: Date.now(),
+    };
 
-      } catch (error) {
-        console.log(error);
-        
-      }
-
-  }
-
-
+    return await axios.post("/api/save", audioPost);
+  };
 
   return (
     <div>
+      <Toaster toastOptions={
+        {duration : 2000} 
+      } />
       <div className="flex justify-center mx-4 gap-2">
         <Button onClick={() => transcribeAudio()} className="btn mt-4">
           Transcribe
@@ -112,7 +107,16 @@ const Transcription = ({ audioBlob }: TranscriptProps) => {
         </div>
       )}
       <div className="flex justify-center">
-<Button onClick={saveAudioPost} className="">Save</Button>
+<Button onClick={() => 
+  toast.promise(
+    saveAudioPost(),
+    {
+      loading: 'Saving...',
+      success: <b>Audio saved successfully!</b>,
+      error: <b>Could not save.</b>,
+    }
+  )
+} className="">Save</Button>
       </div>
     </div>
   );
