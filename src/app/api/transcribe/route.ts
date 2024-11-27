@@ -6,7 +6,7 @@ dotenv.config();
 
 export async function POST(req: NextRequest) {
   try {
-    const deepgramApiKey = process.env.DEEPGRAM_API_KEY;
+    const deepgramApiKey = process.env.DEEPGRAM_API_KEY!;
     const { url } = await req.json();
     const deepgram = createClient(deepgramApiKey);
   
