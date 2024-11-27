@@ -1,5 +1,5 @@
 import { connect } from "@/app/db/dbconfig";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import Audiopost from "@/app/models/textModel";
 
 connect();
